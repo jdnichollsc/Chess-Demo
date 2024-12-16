@@ -1,0 +1,181 @@
+.nft-card {
+  position: relative;
+  background: #2a2b36;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.2);
+
+    .nft-image {
+      transform: scale(1.05);
+    }
+
+    .card-actions {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .sponsored-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(59, 130, 246, 0.9);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .nft-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    background: linear-gradient(45deg, #1a1b23, #2a2b36);
+
+    .nft-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  .card-content {
+    padding: 1.5rem;
+    background: rgba(26, 27, 35, 0.95);
+
+    .piece-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+
+      .avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        border: 2px solid rgba(59, 130, 246, 0.5);
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .info {
+        flex: 1;
+
+        .piece-name {
+          font-family: 'Orbitron', sans-serif;
+          font-weight: 600;
+          font-size: 1.125rem;
+          color: #f3f4f6;
+          margin: 0;
+          line-height: 1.2;
+        }
+
+        .owner {
+          font-size: 0.875rem;
+          color: #9ca3af;
+          margin: 0;
+        }
+      }
+
+      .shortcut {
+        width: 1.5rem;
+        height: 1.5rem;
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    .price-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+
+      .price {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .eth-icon {
+          width: 1rem;
+          height: 1rem;
+          opacity: 0.8;
+        }
+
+        .amount {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 600;
+          font-size: 1.25rem;
+          color: #f3f4f6;
+        }
+      }
+
+      .subscription {
+        font-size: 0.875rem;
+        color: #9ca3af;
+      }
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateY(1rem);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      button {
+        flex: 1;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.buy-btn {
+          background: #3b82f6;
+          color: white;
+
+          &:hover {
+            background: #2563eb;
+          }
+        }
+
+        &.sell-btn {
+          background: rgba(59, 130, 246, 0.1);
+          color: #3b82f6;
+
+          &:hover {
+            background: rgba(59, 130, 246, 0.2);
+          }
+        }
+      }
+    }
+  }
+} 

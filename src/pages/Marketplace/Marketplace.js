@@ -3,11 +3,11 @@ import { Container, Row, Col } from 'react-bootstrap'
 import NFTCard from '../../components/Marketplace/NFTCard'
 import FilterArea from '../../components/Common/FilterArea'
 import Pagination from '../../components/Common/Pagination'
-import blackRook from '../../assets/img/black-rook.png'
-import shortcut from '../../assets/img/shortcut.png'
 import './Marketplace.scss'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css'
+import blackRook from '../../assets/img/black-rook.png'
+import shortcut from '../../assets/img/shortcut.png'
 
 const PCLASS = {
   p: true,
@@ -270,14 +270,32 @@ const Marketplace = () => {
   const [color, setColor] = useState(COLOR)
   const [pClass, setPClass] = useState(PCLASS)
   const [bCount, setBCount] = useState(7)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const ITEMS_PER_PAGE = 15
 
   useEffect(() => {
-    setNfts(tempPieces)
+    setIsLoading(true)
+    setTimeout(() => {
+      setNfts(tempPieces)
+      setIsLoading(false)
+    }, 500)
   }, [])
 
   useEffect(() => {
+    setIsLoading(true)
+    setPage(1)
     resetNfts()
+    setIsLoading(false)
   }, [status, color, pClass, bCount])
+
+  const handleBuyClick = (piece) => {
+    console.log('Buying piece:', piece)
+  }
+
+  const handleSellClick = (piece) => {
+    console.log('Selling piece:', piece)
+  }
 
   const resetNfts = () => {
     let temp = tempPieces.filter(
@@ -299,11 +317,33 @@ const Marketplace = () => {
     setNfts(temp)
   }
 
+  const currentItems = nfts.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE)
+
+  const renderContent = () => {
+    if (isLoading) {
+      return <div className="loading-state">Loading...</div>
+    }
+    if (currentItems.length > 0) {
+      return currentItems.map((card) => (
+        <Col key={card.pId} className="mb-4">
+          <NFTCard
+            piece={card}
+            avatar={blackRook}
+            shortcut={shortcut}
+            onClickBuy={handleBuyClick}
+            onClickSell={handleSellClick}
+          />
+        </Col>
+      ))
+    }
+    return <div className="no-results">No items found matching your criteria</div>
+  }
+
   return (
     <Container fluid style={{ backgroundColor: '#15171e' }}>
       <Container className="marketplace-page-container">
-        <Row style={{ height: '100%' }}>
-          <Col className="filter-area" xs={4} md={3}>
+        <Row>
+          <Col className="filter-area" xs={12} md={3}>
             <FilterArea
               status={status}
               setStatus={setStatus}
@@ -313,29 +353,20 @@ const Marketplace = () => {
               setPClass={setPClass}
               bCount={bCount}
               setBCount={setBCount}
-              />
+            />
           </Col>
-          <Col className="nfts-grid-container" xs={8} md={9}>
+          <Col className="nfts-grid-container" xs={12} md={9}>
             <h1 className="head-title">trending pieces</h1>
             <div className="nfts-area">
-            {nfts.map((card, index) =>
-              (index >= 12 * (page - 1) && index < 12 * page) &&
-              <NFTCard
-                key={index}
-                sale={card.sale}
-                avatar={blackRook}
-                shortcut={shortcut}
-                name={card.name}
-                owner={card.owner}
-                price={5.65}
-                sponsored={card.sponsored}
-                subscription={card.subscription}
-              />
-            )
-            }
-
+              {renderContent()}
             </div>
-            <Pagination count={Math.ceil(nfts.length / 12)} page={page} setPage={setPage} />
+            {!isLoading && currentItems.length > 0 && (
+              <Pagination
+                count={Math.ceil(nfts.length / ITEMS_PER_PAGE)}
+                page={page}
+                setPage={setPage}
+              />
+            )}
           </Col>
         </Row>
       </Container>

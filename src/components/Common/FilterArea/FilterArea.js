@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Accordion from 'react-bootstrap/Accordion'
 import Form from 'react-bootstrap/Form'
 import RangeSlider from 'react-bootstrap-range-slider'
@@ -16,21 +16,21 @@ const FilterArea = ({
   setSPiece,
   setSStyle
 }) => {
-  const handleClickStatus = (e) => {
+  const handleChangeStatus = (e) => {
     const temp = { ...status }
     temp[e.target.value] = e.target.checked
     setStatus(temp)
     resetSelectedItem()
   }
 
-  const handleClickColor = (e) => {
+  const handleChangeColor = (e) => {
     const temp = { ...color }
     temp[e.target.value] = e.target.checked
     setColor(temp)
     resetSelectedItem()
   }
 
-  const handleClickClass = (e) => {
+  const handleChangeClass = (e) => {
     const temp = { ...pClass }
     temp[e.target.value] = e.target.checked
     setPClass(temp)
@@ -38,7 +38,7 @@ const FilterArea = ({
   }
 
   const handleChangeBCount = (e) => {
-    setBCount(e.target.value)
+    setBCount(Number(e.target.value))
     resetSelectedItem()
   }
 
@@ -49,8 +49,6 @@ const FilterArea = ({
     }
   }
 
-  useEffect(() => {
-  }, [])
   return (
     <>
       <h1 className="filter-title">
@@ -69,7 +67,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="status-checkbox-forsale"
                   value="forsale"
-                  onClick={handleClickStatus}
+                  onChange={handleChangeStatus}
                   checked={status.forsale}
                 />
               </li>
@@ -81,7 +79,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="status-checkbox-notforsale"
                   value="notforsale"
-                  onClick={handleClickStatus}
+                  onChange={handleChangeStatus}
                   checked={status.notforsale}
                 />
               </li>
@@ -100,7 +98,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="color-checkbox-black"
                   value="black"
-                  onClick={handleClickColor}
+                  onChange={handleChangeColor}
                   checked={color.black}
                 />
               </li>
@@ -112,7 +110,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="color-checkbox-white"
                   value="white"
-                  onClick={handleClickColor}
+                  onChange={handleChangeColor}
                   checked={color.white}
                 />
               </li>
@@ -131,7 +129,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="class-checkbox-pawn"
                   value="p"
-                  onClick={handleClickClass}
+                  onChange={handleChangeClass}
                   checked={pClass.p}
                 />
               </li>
@@ -143,7 +141,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="class-checkbox-knight"
                   value="n"
-                  onClick={handleClickClass}
+                  onChange={handleChangeClass}
                   checked={pClass.n}
                 />
               </li>
@@ -155,7 +153,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="class-checkbox-bishop"
                   value="b"
-                  onClick={handleClickClass}
+                  onChange={handleChangeClass}
                   checked={pClass.b}
                 />
               </li>
@@ -167,7 +165,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="class-checkbox-rook"
                   value="r"
-                  onClick={handleClickClass}
+                  onChange={handleChangeClass}
                   checked={pClass.r}
                 />
               </li>
@@ -179,7 +177,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="class-checkbox-queen"
                   value="q"
-                  onClick={handleClickClass}
+                  onChange={handleChangeClass}
                   checked={pClass.q}
                 />
               </li>
@@ -191,7 +189,7 @@ const FilterArea = ({
                   type="checkbox"
                   id="class-checkbox-king"
                   value="k"
-                  onClick={handleClickClass}
+                  onChange={handleChangeClass}
                   checked={pClass.k}
                 />
               </li>
@@ -204,14 +202,13 @@ const FilterArea = ({
             <RangeSlider
               value={bCount}
               onChange={handleChangeBCount}
+              min={0}
               max={7}
               tooltip="on"
+              tooltipPlacement="top"
+              tooltipLabel={value => `${value}`}
             />
           </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="4">
-          <Accordion.Header>Attributes</Accordion.Header>
-          <Accordion.Body></Accordion.Body>
         </Accordion.Item>
       </Accordion>
     </>
